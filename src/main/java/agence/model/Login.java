@@ -36,8 +36,24 @@ public class Login
     {
 
     }
-
+    
+    
     /**
+	 * @param idLog
+	 * @param login
+	 * @param motDePasse
+	 * @param admin
+	 */
+	public Login(int idLog, String login, String motDePasse, boolean admin) {
+
+		this.idLog = idLog;
+		this.login = login;
+		this.motDePasse = motDePasse;
+		this.admin = admin;
+	}
+
+
+	/**
      * Constructeur
      * 
      * @param idLog
