@@ -3,19 +3,26 @@
  */
 package agence.dao;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import agence.model.Client;
 import agence.model.ClientMoral;
+import agence.model.ClientPhysique;
+
+
 
 /**
  * @author Seme
  */
-public class ClientMoralDaoSql extends ClientDaoSql
+public class ClientMoralDaoSql extends ClientDaoSql //implements ClientDao
 {
     public List<Client> findAll()
     {
@@ -108,5 +115,128 @@ public class ClientMoralDaoSql extends ClientDaoSql
 
         return objClient;
     }
+   
+    @Override
+    public void create(ClientMoral clientMoral)
+    {
+    	 try
+         {
+             PreparedStatement ps = connexion
+                     .prepareStatement("insert into client (idClient, nom, numTel, numFax, eMail, siret, idAdd) VALUES(?,?,?,?,?,?,?)");
+             
+             
+             ps.setLong(1, clientMoral.getIdCli());
+             ps.setString(2, clientMoral.getNom()); 
+             ps.setString(3, clientMoral.getNumeroTel());
+             ps.setString(4, clientMoral.getNumeroFax());
+             ps.setString(5, clientMoral.getEmail());
+             ps.setLong(6, clientMoral.getSiret());
+             ps.setLong(7, 2L);
+             ps.executeUpdate();
+             
+
+         }
+         catch (SQLException e)
+         {
+             e.printStackTrace();
+         }
+         finally
+         {/*
+            try
+             {
+                connexion.close();
+             }
+             catch (SQLException e)
+             {
+                 e.printStackTrace();
+             }*/
+         }
+    }
+    
+    @Override
+    public ClientMoral update(ClientMoral clientMoral)
+    {
+    	try
+        {
+    		PreparedStatement ps = connexion.prepareStatement("update client set  nom=?, numTel=?, numFax=?, eMail=?, siret=?, idAdd=? WHERE idClient=? ");
+    		
+    		ps.setLong(7, clientMoral.getIdCli());
+            ps.setString(2, clientMoral.getNom());
+            ps.setString(3, clientMoral.getNumeroTel());
+            ps.setString(4, clientMoral.getNumeroFax());
+            ps.setString(5, clientMoral.getEmail());
+            ps.setLong(6, clientMoral.getSiret());
+            ps.setLong(7, 3L);
+            
+
+            ps.executeUpdate();
+
+        }
+        
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            /*try
+            {
+                connexion.close();
+            }
+            catch (SQLException e)
+            {
+                e.printStackTrace();
+            }*/
+        }
+    	return clientMoral;
+    }
+    
+@Override
+public void delete(ClientMoral clientMoral)
+{
+	try
+    {
+		PreparedStatement ps = connexion
+        .prepareStatement("delete from client where id = ?");
+        ps.setLong(1, clientMoral.getIdCli());
+
+        ps.executeUpdate();
+
+    }
+    
+    catch (SQLException e)
+    {
+        e.printStackTrace();
+    }
+    finally
+    {
+      /*  try
+        {
+            connexion.close();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }*/
+    }
+}
+
+@Override
+public void create(ClientPhysique clientPhysique) {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public ClientPhysique update(ClientPhysique clientPhysique) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public void delete(ClientPhysique clientPhysique) {
+	// TODO Auto-generated method stub
+	
+}   
 
 }
