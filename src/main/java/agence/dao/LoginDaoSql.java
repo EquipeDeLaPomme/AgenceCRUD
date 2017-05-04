@@ -1,5 +1,6 @@
 package agence.dao;
 
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -87,5 +88,118 @@ public class LoginDaoSql extends DaoSQL implements LoginDao
 
         return objLogin;
     }
+    
+    
+    
+    /**
+     * Permet de créer un Login dans la BDD
+     * @param login
+     */
+    @Override
+    public void create(Login login){
+    	
+	    try
+	        {
+	    	// Créer ma requête d'insertion INSERT INTO
+	        PreparedStatement requete;
+	
+	        requete = connexion.prepareStatement(
+	                "insert into login (id,login,motDePasse,admin)" + " VALUES(?,?,?,?)");
+	        requete.setInt(1, login.getIdLog());	
+	        requete.setString(2, login.getLogin());	
+	        requete.setString(3, login.getMotDePasse());	        
+	        requete.setBoolean(4, login.isAdmin());
+	
+	        // je l'exécute
+	        requete.executeUpdate();
+	
+	    }
+	    catch (SQLException e)
+	    {
+	        e.printStackTrace();
+	    }
+	    catch (NullPointerException e)
+	    {
+	        e.printStackTrace();
+	    }
+	    finally
+	    { /*
+	        try
+	        {
+	            connexion.close();
+	        }
+	        catch (SQLException e)
+	        {
+	            e.printStackTrace();
+	        } */
+	    }
+	    	
+	    }
 
-}
+    
+    
+    
+	@Override
+	public Login update(Login login) {
+		try
+        {
+            PreparedStatement ps = connexion
+                    .prepareStatement("update login set id=?,login=?,motDePasse=?,admin=?");
+
+            ps.setLong(1, login.getIdLog());
+            ps.setString(2, login.getLogin());
+            ps.setString(3, login.getMotDePasse());
+            ps.setBoolean(4, login.isAdmin());
+
+            ps.executeUpdate();
+
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                connexion.close();
+            }
+            catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        return login;
+	}
+
+	
+	
+	
+	@Override
+	public void delete(Login login) {
+		try
+        {
+            PreparedStatement ps = connexion.prepareStatement("delete from login where id = ?");
+            ps.setLong(1, login.getIdLog());
+
+            ps.executeUpdate();
+
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                connexion.close();
+            }
+            catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
+        }		
+	}
+    }
