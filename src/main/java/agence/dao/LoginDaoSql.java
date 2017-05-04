@@ -144,12 +144,13 @@ public class LoginDaoSql extends DaoSQL implements LoginDao
 		try
         {
             PreparedStatement ps = connexion
-                    .prepareStatement("update login set id=?,login=?,motDePasse=?,admin=?");
+                    .prepareStatement("update login set login=?,motDePasse=?,admin=? where id = ?");
 
-            ps.setLong(1, login.getIdLog());
-            ps.setString(2, login.getLogin());
-            ps.setString(3, login.getMotDePasse());
-            ps.setBoolean(4, login.isAdmin());
+
+            ps.setInt(4, login.getIdLog());
+            ps.setString(1, login.getLogin());
+            ps.setString(2, login.getMotDePasse());
+            ps.setBoolean(3, login.isAdmin());
 
             ps.executeUpdate();
 
@@ -159,7 +160,7 @@ public class LoginDaoSql extends DaoSQL implements LoginDao
             e.printStackTrace();
         }
         finally
-        {
+        {/*
             try
             {
                 connexion.close();
@@ -167,7 +168,7 @@ public class LoginDaoSql extends DaoSQL implements LoginDao
             catch (SQLException e)
             {
                 e.printStackTrace();
-            }
+            }*/
         }
 
         return login;
@@ -191,7 +192,7 @@ public class LoginDaoSql extends DaoSQL implements LoginDao
             e.printStackTrace();
         }
         finally
-        {
+        {/*
             try
             {
                 connexion.close();
@@ -199,7 +200,7 @@ public class LoginDaoSql extends DaoSQL implements LoginDao
             catch (SQLException e)
             {
                 e.printStackTrace();
-            }
+            }*/
         }		
 	}
     }
