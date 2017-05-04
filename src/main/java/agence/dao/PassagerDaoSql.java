@@ -3,13 +3,17 @@
  */
 package agence.dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
+import agence.model.Adresse;
 import agence.model.Passager;
+import agence.model.Reservation;
 
 /**
  * @author Seme
@@ -17,7 +21,7 @@ import agence.model.Passager;
 public class PassagerDaoSql extends DaoSQL implements PassagerDao
 {
     AdresseDao adresseDao = new AdresseDaoSql();
-
+    ReservationDao reservationDao = new ReservationDaoSql();
     /*
      * (non-Javadoc)
      * @see agence.dao.Dao#findAll()
@@ -118,4 +122,105 @@ public class PassagerDaoSql extends DaoSQL implements PassagerDao
         return passager;
     }
 
+	@Override
+	public void create(Passager pass) {
+		try
+        {
+
+            // Créer ma requête d'insertion INSERT INTO
+            PreparedStatement requete;
+            // je teste si l'élève est lié à un formateur
+            {
+                requete = connexion.prepareStatement(
+                        "insert into passager (idPassager,nom,prenom,idAdd)" + " VALUES(?,?,?,?)");
+
+            // requete.setLong(1, eleve.getId());
+            requete.setInt(1, pass.getIdPas());
+            requete.setString(2, pass.getNom());
+            // Je convertis une java.util.Date en java.sql.Date
+            requete.setString(3, pass.getPrenom());
+            requete.setInt(4, pass.getAdresse().getIdAdd());
+
+            //je l'exécute
+            requete.executeUpdate();
+            }
+           
+        }catch(
+
+	SQLException e)
+	{
+		e.printStackTrace();
+	}catch(
+	NullPointerException e)
+	{
+		e.printStackTrace();
+	}finally
+	{
+		/*
+		 * try { connexion.close(); } catch (SQLException e) {
+		 * e.printStackTrace(); }
+		 */
+	}
+	}
+
+	@Override
+	public Passager update(Passager pass) {
+		try {
+
+			PreparedStatement requete = connexion.prepareStatement(
+					"update passager set idPassager=?,nom=?,prenom=?,idAdd=? where idPassager = ?");
+
+			requete.setLong(5, pass.getIdPas());
+
+			requete.setInt(1, pass.getIdPas());
+            requete.setString(2, pass.getNom());
+            requete.setString(3, pass.getPrenom());
+            requete.setInt(4, pass.getAdresse().getIdAdd());
+
+            requete.executeUpdate();
+
+		}
+
+		catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+		}
+
+		return pass;
+	}
+
+	@Override
+	public void delete(Passager pass) {
+		
+		try
+        {
+
+            PreparedStatement ps = connexion.prepareStatement("delete from passager where idPassager = ?");
+            ps.setLong(1, pass.getIdPas());
+            Scanner lecteur = new Scanner(System.in);
+            System.out.println("Souhaitez vous également supprimer l'adresse et la/les reservations(s) liée à ce passager ? ");
+            System.out.println("OUI : 1, NON : 0");
+            int reponse = lecteur.nextInt();
+            if (reponse == 1)
+            {
+            ps.executeUpdate();
+            Adresse adresseASupprimer = adresseDao.findById(pass.getAdresse().getIdAdd());
+            Reservation reservationASupprimer = reservationDao.findById(pass.getIdPas());
+            adresseDao.delete(adresseASupprimer);
+            reservationDao.delete(reservationASupprimer);
+            }
+            else{
+            	ps.executeUpdate();
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+        }
+	}		
 }
+
+
