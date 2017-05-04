@@ -4,7 +4,9 @@
 package agence.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,6 +17,7 @@ import agence.model.Client;
 import agence.model.EtatReservation;
 import agence.model.Passager;
 import agence.model.Reservation;
+import agence.model.Vol;
 
 /**
  * @author Seme
@@ -307,4 +310,116 @@ public class ReservationDaoSql extends DaoSQL implements ReservationDao
         return listeBO;
     }
 
+	@Override
+	public void create(Reservation resa) {
+		// TODO Auto-generated method stub
+		 PassagerDao passagerDao = new PassagerDaoSql();
+	     VolDao volDao = new VolDaoSql();
+		try
+        {
+
+            // Créer ma requête d'insertion INSERT INTO
+            PreparedStatement requete;
+            // je teste si l'élève est lié à un formateur
+            {
+                requete = connexion.prepareStatement(
+                        "insert into reservation (idResa,dateReservation,numero, etat, idVol, idPassager,idClient)" 
+                        + " VALUES(?,?,?,?,?,?,?)");
+
+            // requete.setLong(1, eleve.getId());
+            requete.setInt(1, resa.getIdRes());
+            requete.setDate(2, new java.sql.Date(resa.getDate().getTime()));
+            // Je convertis une java.util.Date en java.sql.Date
+            requete.setString(3, resa.getNumero());
+            requete.setString(4, resa.getEtat().getLabel());
+            requete.setInt(5, resa.getVol().getIdVol());
+          //  requete.setNull(6, java.sql.Types.);
+            requete.setInt(6,resa.getPassager().getIdPas());
+            requete.setInt(7, resa.getClient().getIdCli());
+
+            requete.executeUpdate();
+            }
+           
+        }
+		
+		catch(SQLException e)
+	{
+		e.printStackTrace();
+	}
+	
+		catch(NullPointerException e)
+	{
+		e.printStackTrace();
+	}finally
+	{
+		/*
+		 * try { connexion.close(); } catch (SQLException e) {
+		 * e.printStackTrace(); }
+		 */
+	}
+	}
+
+	@Override
+	public Reservation update(Reservation resa) {
+		try {
+
+			PreparedStatement requete = connexion.prepareStatement(
+					"update reservation set idResa=?,dateReservation=?,numero=?,etat=?," + 
+			"idVol=?, idPassager=?, idClient=? where idResa = ?");
+
+			requete.setInt(8, resa.getIdRes());
+
+			requete.setInt(1, resa.getIdRes());
+            requete.setDate(2, new java.sql.Date(resa.getDate().getTime()));
+            // Je convertis une java.util.Date en java.sql.Date
+            requete.setString(3, resa.getNumero());
+            requete.setString(4, resa.getEtat().getLabel());
+            requete.setInt(5, resa.getVol().getIdVol());
+          //  requete.setNull(6, java.sql.Types.);
+            requete.setInt(6,resa.getPassager().getIdPas());
+            requete.setInt(7, resa.getClient().getIdCli());
+
+			requete.executeUpdate();
+
+		}
+
+		catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+		}
+
+		return resa;
+	}
+
+	@Override
+	public void delete(Reservation resa) {
+		try
+        {
+
+            PreparedStatement ps = connexion.prepareStatement("delete from reservation where idResa = ?");
+            ps.setLong(1, resa.getIdRes());
+
+            ps.executeUpdate();
+
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+        	/*
+            try
+            {
+                conn.close();
+            }
+            catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
+            */
+        }
+	}
 }
+
+
