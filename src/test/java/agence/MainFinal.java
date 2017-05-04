@@ -269,39 +269,43 @@ public class MainFinal {
 						System.out.println("Erreur de programmation.");
 						break;
 					} break;
-					/*
-				case 2: 
-			        listeLogins = loginDao.findAll();
-			        afficherTestEtResultat("Création d'un Login - Avant", listeLogins);
-			        Login newLogin = new Login(3, "tata@gmail.com", "motdepasse", false);
+					
+				case 2: /*
+			        listeReservations = reservationDao.findAll();
+			        afficherTestEtResultat("Création d'un Login - Avant", listeReservations);
+			        Reservation new = new Login(3, "tata@gmail.com", "motdepasse", false);
 			        loginDao.create(newLogin);
 			        listeLogins = loginDao.findAll();
-			        afficherTestEtResultat("Création d'un Login - Après", listeLogins);
+			        afficherTestEtResultat("Création d'un Login - Après", listeReservations);*/
 					break;
 					
 				case 3:
+					/*
 			        afficherTestEtResultat("Mise à jour d'un Login - Avant", logins);
 			        Login loginModif = loginDao.findById(1);
 			        loginModif.setMotDePasse("TataToto");
 			        Login loginMAJ = loginDao.update(loginModif);
 			        logins = loginDao.findById(1);
-			        afficherTestEtResultat("Mise à jour d'un Login - Après", logins);
+			        afficherTestEtResultat("Mise à jour d'un Login - Après", logins); */
 					break;
+				
 						
 				case 4:
-			        afficherTestEtResultat("Suppression d'un Login - Avant", listeLogins);
-			        Login loginASupprimer = loginDao.findById(3);
-			        loginDao.delete(loginASupprimer);
-			        listeLogins = loginDao.findAll();
-			        afficherTestEtResultat("Suppression d'un Login - Après", listeLogins);
+			        afficherTestEtResultat("Suppression d'une Réservation - Avant", listeReservations);
+			        Reservation ReservationASupprimer = reservationDao.findById(40);
+			        reservationDao.delete(ReservationASupprimer);
+			        listeReservations = reservationDao.findAll();
+			        afficherTestEtResultat("Suppression d'une Réservation - Après", listeReservations);
 			        System.out.println("\n\n");
 					break;
-*/
+
 				default:
 					System.out.println("Erreur de programmation.");
 					break;
 				}
 				
+				
+				// String test2 = sc.nextLine();
 				break;
 
 				/*
@@ -309,11 +313,24 @@ public class MainFinal {
 				System.out.println("Erreur de programmation.");
 				break;
 				*/
+				
+				
+				
+
+				
+				
 			}
 		} catch (NullPointerException e) {
 			System.err.println("L'index renseigné est incorrect !");
 			e.printStackTrace();
 		}
+		
+		
+		
+		
+		
+
+		
 		
 	}
 	
