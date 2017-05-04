@@ -57,7 +57,6 @@ public class VolDaoSql extends DaoSQL implements VolDao
             } // fin de la boucle de parcoutuple de l'ensemble des résultats
 
             // fermeture de la base aeroport
-            aeroportDAO.fermetureConnexion();
 
         }
         catch (SQLException e)
@@ -99,7 +98,6 @@ public class VolDaoSql extends DaoSQL implements VolDao
                 vol.setAeroportDepart(
                         aeroportDAO.findById(tuple.getInt("idAeroportDepart")));
                 // fermeture de la base aeroport
-                aeroportDAO.fermetureConnexion();
             }
 
         }
