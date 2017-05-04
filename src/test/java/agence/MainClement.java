@@ -17,6 +17,7 @@ import agence.dao.PassagerDaoSql;
 import agence.dao.ReservationDao;
 import agence.dao.ReservationDaoSql;
 import agence.dao.VolDaoSql;
+import agence.model.Adresse;
 import agence.model.Client;
 import agence.model.EtatReservation;
 import agence.model.Passager;
@@ -58,49 +59,68 @@ public class MainClement {
 		AdresseDao adresseDao = new AdresseDaoSql();
 		ReservationDao resadao = new ReservationDaoSql();
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		/*
+		
+		
+		
 		  Adresse addres = new Adresse(); 
 		  addres.setIdAdd(100);
 		  addres.setAdresse("5, allée des tourterelles");
 		  addres.setCodePostal("33610"); addres.setVille("Canéjan");
 		  addres.setPays("France"); 
-		  */
+		  adresseDao.create(addres);
+		  
+		  
+		  Passager pass = new Passager();
+		  pass.setIdPas(19);
+		  pass.setNom("Boineau");
+		  pass.setPrenom("Clement");
+		  pass.setAdresse(addres);
+		  passagerDao.create(pass);
+
+		  Passager passmodif = passagerDao.findById(19);
+		  passmodif.setNom("Griffon");
+		  Passager passmaj = passagerDao.update(passmodif);
+		  
+		  Passager passsupp = passagerDao.findById(19);
+				  passagerDao.delete(passsupp);
+		  
+		  
 		  /*
 		  Reservation resa = new Reservation();
-			resa.setIdRes(101);
+			resa.setIdRes(10101);
 			resa.setDate(simpleDateFormat.parse("04/01/1978"));
 			resa.setNumero("1532489");
 			resa.setEtat(EtatReservation.CONFIRMEE);
 			resa.setVol(vol);
 			resa.setPassager(passager);
 			resa.setClient(clientPhysique);
-			
-			//resa.setEtat("confirmee");
 			resadao.create(resa);
+			System.out.println(resa.toString());
 			 */
-
-		/*
-		 * Adresse addresmodif = adresseDao.findById(1);
-		 * addresmodif.setAdresse("3 place de l'étoile"); 
-		 * 
-		 * Adresse adresseMAJ = adresseDao.update(addresmodif);
-		 * 
-		 */
-			/*
+/*
+		
+		  Adresse addresmodif = adresseDao.findById(1);
+		  addresmodif.setAdresse("3 place de l'étoile"); 
+		  
+		  Adresse adresseMAJ = adresseDao.update(addresmodif);
+		 
+			
 			Reservation resamodif = resadao.findById(101);
 			resamodif.setNumero("123212");
 			Reservation resaMAJ = resadao.update(resamodif);
-			*/
+			
 		
 		
 
-		// Adresse adresseASupprimer = adresseDao.findById(10000);
-		// adresseDao.delete(adresseASupprimer);
+		 Adresse adresseASupprimer = adresseDao.findById(10000);
+		 adresseDao.delete(adresseASupprimer);
 
 		Reservation resadelete = resadao.findById(101);
 		resadao.delete(resadelete);
 
-		
+		*/
+		  
+		  
 		
 	}
 
