@@ -20,6 +20,15 @@ public class ClientPhysique extends Client
     {
         super(idCli);
     }
+    public ClientPhysique()
+    {
+        
+    }
+    public ClientPhysique(int idCli, String nom, String numTel,String numFax, String eMail, String prenom)
+    {
+        super();
+        this.prenom=prenom;
+    }
 
     /**
      * @return the prenom

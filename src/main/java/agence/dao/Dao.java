@@ -2,6 +2,9 @@ package agence.dao;
 
 import java.util.List;
 
+import agence.model.ClientMoral;
+import agence.model.ClientPhysique;
+
 /**
  * Contrat que tous les DAOs devront respecter.
  * 
@@ -32,19 +35,18 @@ public interface Dao<T, PK>
 	 * @param obj L'objet à persister
 	 * INSERT
 	 */
-	void create(T obj);
 	
-	/**
-	 * Retourne un objet métier mis à jour
-	 * @param obj L'objet à mettre à jour
-	 * @return L'objet métier mis à jour
-	 */
-	T update(T obj);
-	
-	/**
-	 * Supprime un objet métier de la source de données
-	 * @param obj L'objet à supprimer
-	 */
-	void delete(T obj);
+
+	void create(ClientMoral clientMoral);
+
+	ClientMoral update(ClientMoral clientMoral);
+
+	void delete(ClientMoral clientMoral);
+
+	void create(ClientPhysique clientPhysique);
+
+	ClientPhysique update(ClientPhysique clientPhysique);
+
+	void delete(ClientPhysique clientPhysique);
 
 }

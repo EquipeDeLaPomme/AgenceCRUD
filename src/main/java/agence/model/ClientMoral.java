@@ -20,7 +20,15 @@ public class ClientMoral extends Client
     {
         super(idCli);
     }
-
+    public ClientMoral(int idCli,  String nom, String numTel,String numFax, String eMail, long siret )
+    {
+        super();
+        this.siret=siret;
+    }
+    public ClientMoral()
+    {
+        
+    }
     /**
      * @return the siret
      */
@@ -37,4 +45,6 @@ public class ClientMoral extends Client
     {
         this.siret = siret;
     }
+    
+    
 }
