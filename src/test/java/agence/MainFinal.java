@@ -9,10 +9,22 @@ import java.util.Scanner;
 
 import agence.dao.AdresseDao;
 import agence.dao.AdresseDaoSql;
+import agence.dao.ClientDaoSql;
+import agence.dao.ClientMoralDaoSql;
+import agence.dao.ClientPhysiqueDaoSql;
 import agence.dao.LoginDao;
 import agence.dao.LoginDaoSql;
+import agence.dao.PassagerDao;
+import agence.dao.PassagerDaoSql;
+import agence.dao.ReservationDao;
+import agence.dao.ReservationDaoSql;
+import agence.dao.VolDaoSql;
 import agence.model.Adresse;
+import agence.model.Client;
 import agence.model.Login;
+import agence.model.Passager;
+import agence.model.Reservation;
+import agence.model.Vol;
 
 /**
  * @author ajc
@@ -196,6 +208,95 @@ public class MainFinal {
 			        System.out.println("\n\n");
 					break;
 
+				default:
+					System.out.println("Erreur de programmation.");
+					break;
+				}
+				
+				break;
+				
+			case 4:
+				VolDaoSql volDao = new VolDaoSql();
+		        List<Vol> listeVols = volDao.findAll();
+		        Vol vol = volDao.findById(1);
+		        volDao.fermetureConnexion();
+		        
+		        PassagerDao passagerDao = new PassagerDaoSql();
+		        List<Passager> listePassagers = passagerDao.findAll();
+		        Passager passager = passagerDao.findById(1);
+		        
+		        
+		        ClientDaoSql clientDaoSql = new ClientMoralDaoSql();
+		        List<Client> listeClientsMoraux = clientDaoSql.findAll();
+		        Client clientMoral = clientDaoSql.findById(30);
+
+
+		        clientDaoSql = new ClientPhysiqueDaoSql();
+		        List<Client> listeClientsPhysiques = clientDaoSql.findAll();
+		        Client clientPhysique = clientDaoSql.findById(10);
+			        
+				ReservationDao reservationDao = new ReservationDaoSql();
+		        List<Reservation> listeReservations = reservationDao.findAll();
+		        Reservation reservation = reservationDao.findById(1);
+		        
+				switch (actionARealiser) {
+				case 1:
+					do {
+						System.out.println("Quel affichage souhaitez-vous ?");
+						System.out.println("\t 1 - Afficher toute la liste");
+						System.out.println("\t 2 - Afficher à partir d'un ID");
+						System.out.println("\t 3 - Afficher à partir de l'ID d'un passager");
+						
+						affichageARealiser = sc.nextInt();
+					} while ((affichageARealiser<0) || (affichageARealiser>3));
+					
+					switch (affichageARealiser) {
+					case 1:
+				        afficherTestEtResultat("Liste des Réservations", listeReservations);
+						break;
+						
+					case 2:
+						reservation = reservationDao.findById(21);
+				        afficherTestEtResultat("Une seule réservation", reservation);
+						break;
+						
+					case 3:
+						reservation = reservationDao.findById(21);
+				        afficherTestEtResultat("Une seule réservation pour le passager", reservation);
+						break;
+
+					default:
+						System.out.println("Erreur de programmation.");
+						break;
+					} break;
+					/*
+				case 2: 
+			        listeLogins = loginDao.findAll();
+			        afficherTestEtResultat("Création d'un Login - Avant", listeLogins);
+			        Login newLogin = new Login(3, "tata@gmail.com", "motdepasse", false);
+			        loginDao.create(newLogin);
+			        listeLogins = loginDao.findAll();
+			        afficherTestEtResultat("Création d'un Login - Après", listeLogins);
+					break;
+					
+				case 3:
+			        afficherTestEtResultat("Mise à jour d'un Login - Avant", logins);
+			        Login loginModif = loginDao.findById(1);
+			        loginModif.setMotDePasse("TataToto");
+			        Login loginMAJ = loginDao.update(loginModif);
+			        logins = loginDao.findById(1);
+			        afficherTestEtResultat("Mise à jour d'un Login - Après", logins);
+					break;
+						
+				case 4:
+			        afficherTestEtResultat("Suppression d'un Login - Avant", listeLogins);
+			        Login loginASupprimer = loginDao.findById(3);
+			        loginDao.delete(loginASupprimer);
+			        listeLogins = loginDao.findAll();
+			        afficherTestEtResultat("Suppression d'un Login - Après", listeLogins);
+			        System.out.println("\n\n");
+					break;
+*/
 				default:
 					System.out.println("Erreur de programmation.");
 					break;
