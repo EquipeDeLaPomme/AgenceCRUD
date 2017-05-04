@@ -6,10 +6,12 @@ package agence;
 import java.io.PrintStream;
 import java.util.List;
 
+import agence.dao.AdresseDao;
+import agence.dao.AdresseDaoSql;
 import agence.dao.LoginDao;
 import agence.dao.LoginDaoSql;
+import agence.model.Adresse;
 import agence.model.Login;
-import formation.model.Eleve;
 
 /**
  * @author ajc
@@ -29,19 +31,36 @@ public class MainDamien {
 		
 
 
-		LoginDao loginDaoSql = new LoginDaoSql();
-        List<Login> listeLogins = loginDaoSql.findAll();
+		LoginDao loginDao = new LoginDaoSql();
+        List<Login> listeLogins = loginDao.findAll();
         afficherTestEtResultat("Liste des logins", listeLogins);
-        Login login = loginDaoSql.findById(2);
+        Login login = loginDao.findById(2);
         afficherTestEtResultat("Un seul login", login);
+        System.out.println("\n\n");
         
+
         
+        // Création et affichage d'un objet
+        listeLogins = loginDao.findAll();
         afficherTestEtResultat("Création d'un Login - Avant", listeLogins);
         Login newLogin = new Login(3, "tata@gmail.com", "motdepasse", false);
-        loginDaoSql.create(newLogin);
+        loginDao.create(newLogin);
+        listeLogins = loginDao.findAll();
         afficherTestEtResultat("Création d'un Login - Après", listeLogins);
-        Login loginASupprimer = loginDaoSql.findById(3);
-        loginDaoSql.delete(loginASupprimer);
+        
+        // Mise à jour d'un objet
+        Login loginModif = loginDao.findById(3);
+        loginModif.setMotDePasse("TataToto");
+        Login loginMAJ = loginDao.update(loginModif);
+        listeLogins = loginDao.findAll();
+        afficherTestEtResultat("Mise à jour d'un Login - Après", listeLogins);
+        
+        // Suppression d'un objet
+        Login loginASupprimer = loginDao.findById(3);
+        loginDao.delete(loginASupprimer);
+        listeLogins = loginDao.findAll();
+        afficherTestEtResultat("Suppression d'un Login - Après", listeLogins);
+        System.out.println("\n\n");
 
         /*
         // mettre à jour l'élève n°4, je change sa note
