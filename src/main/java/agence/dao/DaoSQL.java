@@ -32,7 +32,7 @@ public abstract class DaoSQL
         try
         {
             connexion = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/agence", "user", "password");
+                    "jdbc:mysql://localhost:3306/agencedevoyage", "user1", "password");
         }
         catch (SQLException e)
         {

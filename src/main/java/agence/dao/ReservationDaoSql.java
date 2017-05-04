@@ -118,7 +118,7 @@ public class ReservationDaoSql extends DaoSQL implements ReservationDao
              * Etape 1 : se connecter à la BDD
              */
             Connection connexion = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/agence", "user", "password");
+                    "jdbc:mysql://localhost:3306/agencedevoyage", "user1", "password");
 
             /*
              * Etape 2 : Création du statement
