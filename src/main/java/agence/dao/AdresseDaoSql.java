@@ -188,7 +188,7 @@ public class AdresseDaoSql extends DaoSQL implements AdresseDao {
 		try {
 
 			PreparedStatement ps = connexion.prepareStatement(
-					"update adresse set idAdd=?,adresse=?,codePostal=?,ville=?," + "pays=? where idAdd = ?");
+					"update adresse set idAdd=?,adresse=?,codePostal=?,ville=?, pays=? where idAdd = ?");
 
 			ps.setLong(6, adresse.getIdAdd());
 
